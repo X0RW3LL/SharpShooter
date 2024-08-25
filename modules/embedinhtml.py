@@ -134,7 +134,7 @@ def run_embedInHtml(key, fileName, outFileName, template_name):
             print("\033[93m[!]\033[0;0m Could not determine the mime type for the input file. Force it using the -m switch.")
             quit()
 
-        payload = base64.b64encode(rc4Encryptor.binaryEncrypt(fileBytes.decode(encoding='latin-1')).encode())
+        payload = base64.b64encode(rc4Encryptor.binaryEncrypt(fileBytes.decode(encoding='latin-1')).encode('latin-1')).decode('latin-1')
         print("\033[1;34m[*]\033[0;0m Encrypted input file with key [{}]".format(key))
 
         # blobShim borrowed from https://github.com/mholt/PapaParse/issues/175#issuecomment-75597039
@@ -153,8 +153,8 @@ def run_embedInHtml(key, fileName, outFileName, template_name):
         varBlobObjectName = rand()
         varBlob = rand()
         varBlobShim = rand()
-        blobShimEncrypted = base64.b64encode(rc4Encryptor.stringEncrypt(blobShim).encode())
-        blobObjectNameEncrypted = base64.b64encode(rc4Encryptor.stringEncrypt("Blob").encode())
+        blobShimEncrypted = base64.b64encode(rc4Encryptor.stringEncrypt(blobShim).encode('latin-1')).decode('latin-1')
+        blobObjectNameEncrypted = base64.b64encode(rc4Encryptor.stringEncrypt("Blob").encode('latin-1')).decode('latin-1')
         fileName = os.path.basename(fileName)
 
         params = {
